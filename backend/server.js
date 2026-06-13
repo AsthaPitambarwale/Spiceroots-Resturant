@@ -5,6 +5,22 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://spiceroots-resturant.vercel.app",
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+  );
+  next();
+});
+
 // Import routes
 import authRoutes from "./routes/auth.js";
 import foodRoutes from "./routes/foods.js";
@@ -16,6 +32,12 @@ import offerRoutes from "./routes/offers.js";
 import reviewRoutes from "./routes/reviews.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
+const corsOptions = {
+  origin: "https://spiceroots-resturant.vercel.app",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 // Load environment variables
 dotenv.config();
 
@@ -26,19 +48,10 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://spiceroots-resturant.vercel.app",
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-  }),
-);
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.options("*", cors());
+app.options("*", cors(corsOptions));
 
 // Routes
 app.get("/", (req, res) => {
@@ -56,6 +69,9 @@ app.get("/", (req, res) => {
       reviews: "/api/reviews",
     },
   });
+});
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
 });
 
 app.use("/api/auth", authRoutes);
