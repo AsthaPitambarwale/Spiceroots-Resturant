@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-import express from "express";
-import dotenv from "dotenv";
-import "dotenv/config";
-import cors from "cors";
-import connectDB from "./config/db.js";
-import { errorHandler, notFound } from "./middleware/errorHandler.js";
-=======
 import express from 'express';
 import dotenv from 'dotenv';
 import 'dotenv/config';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
->>>>>>> 97323f6 (Intial)
 
 // Import routes
 import authRoutes from './routes/auth.js';
