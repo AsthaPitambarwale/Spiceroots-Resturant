@@ -190,11 +190,55 @@ export const updateOrderStatus = async (req, res) => {
 
       order.deliveryPartner = randomPartner;
 
-      order.estimatedDeliveryTime = "30-40 mins";
+      const deliveryMinutes = 30;
+
+      order.deliveryAssignedAt = new Date();
+
+      order.deliveryDeadline = new Date(
+        Date.now() + deliveryMinutes * 60 * 1000,
+      );
+
+      order.estimatedDeliveryTime = `${deliveryMinutes} mins`;
     }
 
     await order.save();
 
+    if (orderStatus) {
+      let notificationMessage = "";
+
+      switch (orderStatus) {
+        case "preparing":
+          notificationMessage = "Your order is being prepared";
+          break;
+
+        case "ready":
+          notificationMessage = "Your order is ready";
+          break;
+
+        case "out_for_delivery":
+          notificationMessage = "Your order is out for delivery";
+          break;
+
+        case "delivered":
+          notificationMessage = "Your order has been delivered";
+          break;
+
+        case "cancelled":
+          notificationMessage = "Your order has been cancelled";
+          break;
+
+        default:
+          notificationMessage = `Order status updated to ${orderStatus}`;
+      }
+
+      await Notification.create({
+        user: order.user,
+        title: "Order Status Updated",
+        message: notificationMessage,
+        type: "order",
+        relatedId: order._id,
+      });
+    }
     res.status(200).json({
       success: true,
       data: order,

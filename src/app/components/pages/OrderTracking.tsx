@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Package, Clock, CheckCircle, TruckIcon, XCircle, Phone, User, MapPin, Star } from 'lucide-react';
 import { useApp, Order } from '../../context/AppContext';
@@ -14,6 +14,33 @@ export const OrderTracking = () => {
     rating: 5,
     comment: '',
   });
+
+  const [timeLeft, setTimeLeft] = useState("");
+
+  const getTimeLeft = (deadline) => {
+    if (!deadline) return "";
+
+    const diff = new Date(deadline).getTime() - Date.now();
+
+    if (diff <= 0) {
+      return "Delivered";
+    }
+
+    const mins = Math.floor(diff / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const [, forceUpdate] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      forceUpdate(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (!user) {
     navigate('/login');
@@ -205,6 +232,9 @@ export const OrderTracking = () => {
                       <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200">
                         <p className="text-sm text-blue-900">
                           <Clock className="inline h-4 w-4 mr-2" />
+                          <p>
+                            Delivery in: {getTimeLeft(order.deliveryDeadline)}
+                          </p>
                           Estimated delivery: <strong>{order.estimatedDeliveryTime}</strong>
                         </p>
                       </div>

@@ -35,7 +35,7 @@ export const Offers = () => {
   const fetchOffers = async () => {
     try {
       const res = await fetch(
-        'http://localhost:5000/api/offers'
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/offers`,
       );
 
       const data = await res.json();
