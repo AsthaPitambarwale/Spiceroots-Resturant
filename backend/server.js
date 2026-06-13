@@ -38,6 +38,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.options("*", cors());
 
 // Routes
 app.get("/", (req, res) => {
