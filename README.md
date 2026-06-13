@@ -350,20 +350,6 @@ backend/
 
 The API uses JWT (JSON Web Tokens) for authentication.
 
-**Demo Credentials:**
-
-**Customer Account:**
-```
-Email: customer@example.com
-Password: password
-```
-
-**Admin Account:**
-```
-Email: admin@example.com
-Password: admin123
-```
-
 **Using the API:**
 1. Login to get JWT token
 2. Include token in Authorization header:
