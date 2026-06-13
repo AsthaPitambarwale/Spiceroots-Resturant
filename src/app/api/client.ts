@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://localhost:500/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface ApiResponse<T = any> {
   success: boolean;
