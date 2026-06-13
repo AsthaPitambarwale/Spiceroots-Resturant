@@ -6,6 +6,7 @@ import { NotificationProvider } from './context/NotificationContext';
 import { Toaster } from 'sonner';
 
 export default function App() {
+  console.log("API URL =", import.meta.env.VITE_API_URL);
   return (
     <ThemeProvider>
       <NotificationProvider>

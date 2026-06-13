@@ -26,12 +26,12 @@ A fully-featured, modern food delivery web application built with React, TypeScr
 - **Estimated Delivery Time** - Live countdown to delivery
 - **Order History** - View all past and current orders
 - **Review & Rating** - Rate delivered orders with 1-5 stars and comments
-- Live driver tracking with Google Maps
+<!-- - Live driver tracking with Google Maps
 - Real-time WebSocket status updates
 - Animated delivery route (like Uber Eats)
 - Push notifications (order update alerts)
 - Skeleton loading UI
-- Expand/collapse order cards
+- Expand/collapse order cards -->
 
 #### Table Reservations
 - **Visual Calendar Picker** - Interactive calendar for selecting dates
